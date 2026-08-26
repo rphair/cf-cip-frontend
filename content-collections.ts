@@ -1,5 +1,6 @@
 import { defineCollection, defineConfig } from '@content-collections/core'
 import { compileMarkdown } from '@content-collections/markdown'
+import { z } from 'zod'
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
@@ -69,9 +70,10 @@ type NodeType = {
 const cip = defineCollection({
   name: 'cip',
   directory: 'content/cip',
-  include: '**/page.md',
+  include: 'CIP-*/page.md',
   exclude: ['**/cip/CIPs/page.md'],
-  schema: (z) => ({
+  schema: z.object({
+    content: z.string(),
     Title: z.string(),
     CIP: z.union([z.number(), z.string()]),
     Status: z.string(),
@@ -216,7 +218,9 @@ const cipAnnex = defineCollection({
   directory: 'content/cip',
   include: '**/*.md',
   exclude: ['**/README.md', 'CIP-*/page.md'],
-  schema: (z) => ({}),
+  schema: z.object({
+    content: z.string(),
+  }),
   transform: async (doc, context) => {
     // Extract directory and file name
     const dirParts = doc._meta.directory.split('/')
@@ -335,8 +339,9 @@ const cipAnnex = defineCollection({
 const cps = defineCollection({
   name: 'cps',
   directory: 'content/cps',
-  include: '**/page.md',
-  schema: (z) => ({
+  include: 'CPS-*/page.md',
+  schema: z.object({
+    content: z.string(),
     Title: z.string(),
     CPS: z.union([z.number(), z.string()]),
     Status: z.string(),
@@ -456,7 +461,9 @@ const cpsAnnex = defineCollection({
   directory: 'content/cps',
   include: '**/*.md',
   exclude: ['**/README.md', 'CPS-*/page.md'],
-  schema: (z) => ({}),
+  schema: z.object({
+    content: z.string(),
+  }),
   transform: async (doc, context) => {
     // Extract directory and file name
     const dirParts = doc._meta.directory.split('/')
@@ -573,5 +580,5 @@ const cpsAnnex = defineCollection({
 })
 
 export default defineConfig({
-  collections: [cip, cipAnnex, cps, cpsAnnex],
+  content: [cip, cipAnnex, cps, cpsAnnex],
 })
