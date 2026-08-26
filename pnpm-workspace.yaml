@@ -1,0 +1,9 @@
+allowBuilds:
+  '@parcel/watcher': false
+  '@tailwindcss/oxide': false
+  esbuild: false
+  puppeteer: false
+  sharp: false
+overrides:
+  '@types/react': 19.2.18
+  '@types/react-dom': 19.2.5
